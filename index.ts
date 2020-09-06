@@ -1,19 +1,21 @@
 import * as k8s from "@pulumi/kubernetesx"
 
-const app = "mongo"
-const labels = { app: app }
-const mongo = new k8s.Deployment(app, {
+const name = "mongo"
+const tag = "4.2.9"
+const image = `${name}:${tag}`
+const labels = { app: name }
+const mongo = new k8s.Deployment(name, {
   spec: {
     selector: { matchLabels: labels },
     replicas: 1,
     template: {
       metadata: { labels: labels },
-      spec: { containers: [{ name: app, image: "mongo:latest" }] },
+      spec: { containers: [{ name: name, image: image }] },
     },
   },
 })
 
-new k8s.Service(app, {
+new k8s.Service(name, {
   metadata: {
     labels: mongo.spec.apply((spec) => spec.template.metadata.labels),
   },

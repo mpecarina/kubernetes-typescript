@@ -19,4 +19,6 @@ brew install pulumi
 yarn
 ```
 
+`pulumi stack init`
+
 `pulumi up`

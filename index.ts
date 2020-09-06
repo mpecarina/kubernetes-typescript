@@ -13,7 +13,7 @@ const mongo = new k8s.Deployment(app, {
   },
 })
 
-const service = new k8s.Service(app, {
+new k8s.Service(app, {
   metadata: {
     labels: mongo.spec.apply((spec) => spec.template.metadata.labels),
   },
@@ -23,5 +23,3 @@ const service = new k8s.Service(app, {
     selector: labels,
   },
 })
-
-console.log(service)
